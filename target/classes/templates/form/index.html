@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>user form example</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<form action="#" th:action="@{/form}" th:object="${userForm}" method="post" enctype="multipart/form-data">
+		<table>
+			<tr>
+				<td>ID:</td>
+				<td><input type="number" th:field="*{id}" /></td>
+				<td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">ID error message</td>
+			</tr>
+			<tr>
+				<td>Content:</td>
+				<td><input type="text" th:field="*{name}" /></td>
+				<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Content error message</td>
+			</tr>
+			<tr>
+				<td>File:</td>
+        		<td><input type="file" th:field="*{multipartFile}" /></td>
+<!--          		<td th:if="${#fields.hasErrors('multpartFile')}" th:errors="@{originalFilename}">error messame</td> -->
+			<tr>
+				<td><button type="submit">Submit post</button></td>
+			</tr>
+		</table>
+	</form>
+<!-- 
+	<form method="post" action="/form/result" th:object="${userForm}">
+		<input type="text" th:field="*{id}"></input>
+		<input type="text" th:field="*{name}"></input>
+		<input type="submit" value="登録"></input>
+	</form>
+-->
+</body>
+</html>
