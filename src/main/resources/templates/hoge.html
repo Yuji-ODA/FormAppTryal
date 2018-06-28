@@ -8,9 +8,9 @@
 <table>
 <thead></thead>
 <tbody>
-<tr th:each="hoge : ${hogees}">
-<td th:text="${hoge.id}"></td>
-<td th:each="value : ${hoge.values}" th:text="${value}"></td>
+<tr th:each="row : ${rows}">
+<td th:text="${row.id}"></td>
+<td th:each="cell : ${row.cells}" th:text="${cell.value}" th:colspan="${cell.span}" style="text-align: center;"></td>
 </tr>
 </tbody>
 </table>

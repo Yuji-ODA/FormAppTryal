@@ -1,5 +1,8 @@
 package my.formapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,42 +14,88 @@ public class HogeController {
 
 	@GetMapping(path="")
 	public String Hoge(Model model) {
+		RowClass hoge = new RowClass("aaaaa");
+		hoge.addCell("1");
+		hoge.addCell("2");
+		hoge.addCell("3");
+		hoge.addCell("4");
+		hoge.addCell("5");
 		
-		HogeClass[] hogees = new HogeClass[] {
-				new HogeClass("aaaaa", new String[] {"1", "2", "3", "4", "5"}),
-				new HogeClass("bbbbb", new String[] {"a", "b", "c", "d", "f"})
-			};
+		RowClass huga = new RowClass("bbbbb");
+		huga.addCell("a");
+		huga.addCell("b", 2);
+		huga.addCell("c");
+		huga.addCell("d");
 		
-		model.addAttribute("hogees", hogees);
+		model.addAttribute("rows", new RowClass[] {hoge, huga});
 		
 		return "hoge";
 	}
 	
-	public static class HogeClass {
+	public static class RowClass {
 
 		private String id;
-		private String values[];
+		private List<CellClass> cells;
+
+		class CellClass {
+			private String value;
+			private int span;
+			
+			CellClass(String value) {
+				this(value, 1);
+			}
+			
+			public String getValue() {
+				return value;
+			}
+
+			public void setValue(String value) {
+				this.value = value;
+			}
+
+			public int getSpan() {
+				return span;
+			}
+
+			public void setSpan(int span) {
+				this.span = span;
+			}
+
+			CellClass(String value, int span) {
+				this.value = value;
+				this.span = span;
+			}
+		}
 		
-		public HogeClass(String id, String[] values) {
+		public void addCell(String value) {
+			cells.add(new CellClass(value, 1));
+		}
+		
+		public void addCell(String value, int span) {
+			cells.add(new CellClass(value, span));
+		}
+		
+		public RowClass(String id) {
 			this.id = id;
-			this.values = values;
+			this.cells = new ArrayList<CellClass>();
 		}
 
 		public String getId() {
 			return id;
 		}
 
-		public void setId(String id) {
-			this.id = id;
+//		public void setId(String id) {
+//			this.id = id;
+//		}
+
+		public List<CellClass> getCells() {
+			return cells;
 		}
 
-		public String[] getValues() {
-			return values;
-		}
-
-		public void setValues(String[] values) {
-			this.values = values;
-		}
+//		public void setValues(List<CellClass> cells) {
+//			this.cells = cells;
+//		}
+		
 		
 	}
 	
