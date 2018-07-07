@@ -1,6 +1,10 @@
 package my.formapp;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.boot.SpringApplication;
@@ -12,49 +16,27 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 @SpringBootApplication
 public class FormAppTryalApplication {
+	
+	static <T1, T2> List<Pair<T1, T2>> zip(List<T1> c1, List<T2> c2) {
+		int l = Math.min(c1.size(), c2.size());
+		
+		List<Pair<T1, T2>> dst = new ArrayList(); 
+		for (int i = 0; i < l; ++i) {
+			dst.add(new Pair<T1, T2>(c1.get(i), c2.get(i)));
+		}
+		
+		return dst;
+	}
 
 	public static void main(String[] args) {
 		String json = "{\"name\":{\"first\":\"joe\",\"last\":\"sixpack\"},\"gender\":\"male\",\"verified\":false,\"hoge\":[1,2,3]}";
-//		System.out.println(json);
-		//LinkedHashMapを使うと順序が保持される
 
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.enable(SerializationFeature.INDENT_OUTPUT);
-		Map result = null;
-		try {
-			result = mapper.readValue(json, LinkedHashMap.class);
-			System.out.println(mapper.writeValueAsString(result));	
-		} catch (Exception ex) {
-			
-		}
-
-//		System.out.println(result.toString());
-		for (Object key : result.keySet()) {
-			System.out.println(key);
-			Object value = result.get(key);
-			System.out.println(value.getClass());
-			if (value instanceof LinkedHashMap) {
-				LinkedHashMap map = (LinkedHashMap)value;
-				for (Object mapkey : map.keySet()) {
-					System.out.println("  " + mapkey.getClass());
-					System.out.println("  " + mapkey);
-					System.out.println("  " + map.get(mapkey).getClass());
-					System.out.println("  " + map.get(mapkey));
-				}
-			}
-		}
+		Pair<Integer, String> p = new Pair<Integer, String>(0, "s");
 		
-		JsonNode root = null;
-		try {
-			root = new ObjectMapper().readTree(json);
-			
-		} catch (Exception ex) {
-			
-		}
+		List<String> hoge = Arrays.asList("a", "b", "c", "d", "e");
 		
-		JsonNode hoge = root.get("hoge");
+		List<Integer> huga = Arrays.asList(1,2,3,4,5);
 		
-		System.out.println(root);
 		
 		SpringApplication.run(FormAppTryalApplication.class, args);
 	}
